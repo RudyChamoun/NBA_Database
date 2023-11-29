@@ -1,2 +1,1 @@
-# NBA_Database
-NBA_Database
+Designed and implemented an NBA database using SQL, optimizing data organization and retrieval for comprehensive player, team, and game information. Employed relational database principles to ensure efficient data management and analysis.
