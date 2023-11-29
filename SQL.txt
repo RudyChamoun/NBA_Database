@@ -1,0 +1,84 @@
+CREATE TABLE Player (
+    PlayerNo INT PRIMARY KEY,
+    FirstName VARCHAR(255),
+    MiddleName VARCHAR(255),
+    LastName VARCHAR(255),
+    DateOfBirth DATE,
+    Age INT,
+    TeamCode INT,
+    JerseyNo INT,
+    FOREIGN KEY (TeamCode) REFERENCES Team(TeamCode)
+);
+
+CREATE TABLE Team (
+    TeamCode INT PRIMARY KEY,
+    Name VARCHAR(255),
+    TotalPlayers INT,
+    TotalPlayedGames INT,
+    TotalWins INT,
+    TotalLosses INT,
+    Coach VARCHAR(255)
+);
+
+CREATE TABLE Game (
+    GameNo INT PRIMARY KEY,
+    Date DATE,
+    Time TIME,
+    GameType VARCHAR(255),
+    CourtName VARCHAR(255),
+    FOREIGN KEY (CourtName) REFERENCES Court(Name)
+);
+
+CREATE TABLE Court (
+    Name VARCHAR(255) PRIMARY KEY,
+    Street VARCHAR(255),
+    Town VARCHAR(255),
+    District VARCHAR(255),
+    Latitude DECIMAL(9,6),
+    Longitude DECIMAL(9,6),
+    CourtType VARCHAR(255),
+    Capacity INT
+);
+
+CREATE TABLE Participate (
+    PlayerNo INT,
+    GameNo INT,
+    Position VARCHAR(255),
+    Score INT,
+    PRIMARY KEY (PlayerNo, GameNo),
+    FOREIGN KEY (PlayerNo) REFERENCES Player(PlayerNo),
+    FOREIGN KEY (GameNo) REFERENCES Game(GameNo)
+);
+
+CREATE TABLE SeasonRecords (
+    RecordID INT PRIMARY KEY,
+    PlayerNo INT,
+    SeasonYear INT,
+    TotalGames INT,
+    TotalScore INT,
+    FOREIGN KEY (PlayerNo) REFERENCES Player(PlayerNo)
+);
+
+CREATE TABLE GameRecords (
+    RecordID INT PRIMARY KEY,
+    TeamCode INT,
+    GameNo INT,
+    WinLossStatus VARCHAR(255),
+    FOREIGN KEY (TeamCode) REFERENCES Team(TeamCode),
+    FOREIGN KEY (GameNo) REFERENCES Game(GameNo)
+);
+
+CREATE TABLE Referees (
+    RefereeID INT PRIMARY KEY,
+    GameNo INT,
+    Name VARCHAR(255),
+    FOREIGN KEY (GameNo) REFERENCES Game(GameNo)
+);
+
+CREATE TABLE Ownership (
+    TeamCode INT,
+    CourtName VARCHAR(255),
+    PRIMARY KEY (TeamCode, CourtName),
+    FOREIGN KEY (TeamCode) REFERENCES Team(TeamCode),
+    FOREIGN KEY (CourtName) REFERENCES Court(Name)
+);
